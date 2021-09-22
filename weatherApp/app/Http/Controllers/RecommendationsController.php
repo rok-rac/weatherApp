@@ -20,8 +20,15 @@ class RecommendationsController extends Controller
         $this->apiCache = $apiCache;
     }
 
-    public function getRecommendations(Request $request)
+    public function getRecommendations($city)
     {
-        return response()->json($this->apiCache->responseHandler($request->city),200);
+        $validator = Validator::make(['city' => $city], [
+            'city' => 'required|string|max:30'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        return response()->json($this->apiCache->responseHandler($city)[0], $this->apiCache->responseHandler($city)[1]);
     }
 }

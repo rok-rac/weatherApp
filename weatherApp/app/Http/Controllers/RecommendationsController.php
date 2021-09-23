@@ -29,6 +29,6 @@ class RecommendationsController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-        return response()->json($this->apiCache->responseHandler($city)[0], $this->apiCache->responseHandler($city)[1]);
+        return $this->apiCache->responseHandler($city);
     }
 }

@@ -32,11 +32,11 @@ class Api extends Http
                 array_push($this->forecastsArray, [$date, $this->getConditionOfDay($forecasts)]);
                 $date = $this->addDays($date);
             }
-            return [$this->formApiData->formData($city, $this->forecastsArray),200];
+            return response($this->formApiData->formData($city, $this->forecastsArray), 200);
+        } catch (\Exception $e) {
+            return response(['errors' => 'City is not found'], 404);
         } catch (\Throwable $e) {
-            return [$e->getMessage(),404];
-        } catch (\Error $e) {
-            return [$e->getMessage(),500];
+            return response(['errors' => 'Server error'], 500);
         }
     }
 

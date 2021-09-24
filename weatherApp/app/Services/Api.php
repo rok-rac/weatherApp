@@ -9,6 +9,8 @@ use \Carbon\Carbon;
 class Api extends Http
 {
 
+    CONST SOURCE = 'LHMT';
+
     public function __construct(FormApiData $formApiData)
     {
         $this->formApiData = $formApiData;
@@ -32,7 +34,7 @@ class Api extends Http
                 array_push($this->forecastsArray, [$date, $this->getConditionOfDay($forecasts)]);
                 $date = $this->addDays($date);
             }
-            return response($this->formApiData->formData($city, $this->forecastsArray), 200);
+            return response($this->formApiData->formData($city, $this->forecastsArray), 200)->header('Data-Source', self::SOURCE);
         } catch (\Exception $e) {
             return response(['errors' => 'City is not found'], 404);
         } catch (\Throwable $e) {

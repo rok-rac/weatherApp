@@ -16,6 +16,6 @@ class DatabaseSeeder extends Seeder
          \App\Models\Product::factory(100)->create();
          $seeder = new \Database\Seeders\ConditionsSeeder();
          $seeder->run();     
-         \App\Models\ProductCondition::factory(50)->create();
+         \App\Models\ProductCondition::factory(300)->create();
     }
 }
